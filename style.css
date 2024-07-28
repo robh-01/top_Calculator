@@ -19,7 +19,7 @@ body {
 }
 
 .dark-blue {
-    background-color: #047AFC;
+    background-color: hsl(211, 98%, 50%);
     color: white;
 }
 
@@ -35,10 +35,12 @@ body {
     max-width: 330px;
     min-height: 586px;
     border-radius: 3%;
+    padding: 10px;
     color: black;
     display: flex;
     flex-direction: column;
     font-family: 'Oswald', sans-serif;
+    
 }
 
 .display {
@@ -47,8 +49,7 @@ body {
     display: flex;
     justify-content: end;
     padding-top: 22%;
-    padding-inline: 10px;
-    
+    overflow: hidden;
 }
 
 .buttons {
@@ -57,7 +58,6 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
-    padding: 10px;
 }
 
 .btn {
@@ -69,9 +69,4 @@ body {
     font-size: 30px;
 }
 
-.zero {
-    flex-basis: 140px;
-    border-radius: 35%;
-    justify-content: start;
-    padding-left: 15px;
-}
+
