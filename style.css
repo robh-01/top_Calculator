@@ -40,7 +40,7 @@ body {
     display: flex;
     flex-direction: column;
     font-family: 'Oswald', sans-serif;
-    
+    user-select: none;
 }
 
 .display {
@@ -67,6 +67,10 @@ body {
     align-items: center;
     justify-content: center;
     font-size: 30px;
+}
+
+.backspace {
+    background-color: #ff1e00;
 }
 
 

@@ -20,7 +20,7 @@ function operate(num1, num2, operation) {
     if (operation == '+') return add(num1, num2);
     if (operation == '-') return subtract(num1, num2);
     if (operation == 'x') return multiply(num1, num2);
-    if (operation == '÷') return divide(num1, num2);
+    if (operation == '/') return divide(num1, num2);
 }
 
 
@@ -29,6 +29,9 @@ const display = document.querySelector('.display');
 const operation = document.querySelectorAll('.operator');
 const equals = document.querySelector('.equals-to');
 const clear = document.querySelector('.all-clear');
+const negate = document.querySelector('.sign-negation');
+const percent = document.querySelector('.percent');
+const backspace = document.querySelector('.backspace');
 
 function resetButtonOpacity() {
     for (let i = 0; i < operation.length; i++) {
@@ -42,11 +45,11 @@ for (let i = 0; i < buttons.length; i++) {
         if (display.textContent == '0' && buttons[i].textContent != '.') {
             display.textContent = '';
         }
-        else if (display.textContent == '0' && buttons[i].textContent == '.') {
-            display.textContent = '0';
+        if (buttons[i].textContent == '.' && display.textContent.includes('.')) {
+            return;
         }
         if (firstNumber && operator) {
-            if (!secondNumber) {
+            if (!secondNumber && secondNumber != 0) {
                 display.textContent = '';
             }
             display.textContent += buttons[i].textContent;
@@ -65,10 +68,10 @@ for (let i = 0; i < operation.length; i++) {
             firstNumber = +display.textContent;
             operator = operation[i].textContent;
         }
-        if (secondNumber) {
-            firstNumber = Number.isInteger(operate(firstNumber, secondNumber, operator)) ? operate(firstNumber, secondNumber, operator) : operate(firstNumber, secondNumber, operator).toFixed(3);
+        else {
+            firstNumber = operate(firstNumber, secondNumber, operator);
             operator = operation[i].textContent;
-            display.textContent = firstNumber;
+            display.textContent = Number.isInteger(firstNumber) ? firstNumber : parseFloat(firstNumber.toFixed(3));
             secondNumber = undefined;
         }
     })
@@ -92,3 +95,45 @@ clear.addEventListener('click', function () {
     secondNumber = undefined;
     operator = undefined;
 })
+
+negate.addEventListener('click', function () {
+    resetButtonOpacity();
+    let negativeTemp = +display.textContent;
+    negativeTemp = 0 - negativeTemp;
+    display.textContent = negativeTemp;
+    if (firstNumber && operator) {
+        secondNumber = +display.textContent;
+    }
+})
+
+percent.addEventListener('click', function () {
+    resetButtonOpacity();
+    display.textContent /= 100;
+    firstNumber = display.textContent;
+    secondNumber = undefined;
+    operator = undefined;
+})
+
+backspace.addEventListener('click', function () {
+    resetButtonOpacity();
+    display.textContent = display.textContent.substring(0, (display.textContent.length) - 1);
+    if (firstNumber && operator) {
+        secondNumber = +display.textContent;
+    }
+})
+
+//keyboard functionality
+
+// document.addEventListener('keydown', (e) => {
+//     let clickEvent = new Event('click');
+//     for (let i = 0; i < buttons.length; i++) {
+//         if (e.key == buttons[i].textContent) {
+//             buttons[i].dispatchEvent(clickEvent);
+//         }
+//     }
+//     for (let i = 0; i < operation.length; i++) {
+//         if (e.key == operation[i].textContent) {
+//             buttons[i].dispatchEvent(clickEvent);
+//         }
+//     }
+// })
